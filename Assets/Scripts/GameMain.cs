@@ -4,8 +4,27 @@ using UnityEngine;
 
 public class GameMain : MonoBehaviour
 {
-    public void Init()
-    {
+    public GameObject[] gunPrefabs;
 
+    public PlayerController player;
+
+    public void Init(GameEnums.eGunType selectedGunType)
+    {
+        //총을 만든다 
+        Gun gun = this.CreateGun(selectedGunType);
+
+        //플레이어에게 총을 지급 한다 
+        this.player.Init(gun);
     }
+
+    private Gun CreateGun(GameEnums.eGunType gunType)
+    {
+        int index = (int)gunType;
+        GameObject prefab = this.gunPrefabs[index];
+        GameObject go = Instantiate(prefab);
+        Gun gun = go.GetComponent<Gun>();
+        return gun;
+    }
+
+
 }
